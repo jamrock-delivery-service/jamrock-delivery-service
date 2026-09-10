@@ -9,7 +9,11 @@ let shipmentList = [
     origin: "Lagos, Nigeria",
     destination: "London, United Kingdom",
     status: "In Transit",
-    estimatedDelivery: "2026-09-15"
+    estimatedDelivery: "2026-09-15",
+    receiverEmail: "",
+    packagePhoto: "",
+    receiverAddress: "",
+    receiverCity: ""
   }
 ];
 
@@ -32,7 +36,11 @@ function createShipment(data) {
     origin: data.origin || "Not specified",
     destination: data.destination,
     status: data.status || "Shipment Created",
-    estimatedDelivery: data.estimatedDelivery || "To be confirmed"
+    estimatedDelivery: data.estimatedDelivery || "To be confirmed",
+    receiverEmail: data.receiverEmail || "",
+    packagePhoto: data.packagePhoto || "",
+    receiverAddress: data.receiverAddress || "",
+    receiverCity: data.receiverCity || ""
   };
 
   shipmentList.push(shipment);
@@ -54,6 +62,22 @@ function updateShipment(trackingNumber, data) {
 
   if (data.estimatedDelivery) {
     shipment.estimatedDelivery = data.estimatedDelivery;
+  }
+
+  if (data.receiverEmail !== undefined) {
+    shipment.receiverEmail = data.receiverEmail;
+  }
+
+  if (data.packagePhoto !== undefined) {
+    shipment.packagePhoto = data.packagePhoto;
+  }
+
+  if (data.receiverAddress !== undefined) {
+    shipment.receiverAddress = data.receiverAddress;
+  }
+
+  if (data.receiverCity !== undefined) {
+    shipment.receiverCity = data.receiverCity;
   }
 
   return shipment;
