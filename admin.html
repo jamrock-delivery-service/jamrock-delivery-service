@@ -15,49 +15,51 @@
     }
 
     body {
-      background: #f3f4f6;
+      background: #f4f7f6;
       color: #172033;
     }
 
     header {
-      background: #111827;
+      background: #071f3d;
       color: white;
-      padding: 20px 6%;
+      padding: 22px 6%;
+      border-bottom: 5px solid #f5c400;
     }
 
     header h1 {
-      font-size: 23px;
+      font-size: 24px;
     }
 
     header p {
-      margin-top: 5px;
-      color: #d1d5db;
+      margin-top: 6px;
+      color: #d8e2ed;
       font-size: 14px;
     }
 
     .container {
-      width: 90%;
-      max-width: 1100px;
+      width: 92%;
+      max-width: 1150px;
       margin: 30px auto;
     }
 
     .card {
       background: white;
       padding: 25px;
-      border-radius: 12px;
+      border-radius: 14px;
       margin-bottom: 25px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
     }
 
     .card h2 {
       margin-bottom: 20px;
       font-size: 22px;
+      color: #071f3d;
     }
 
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 15px;
+      gap: 16px;
     }
 
     .form-group {
@@ -72,44 +74,64 @@
     label {
       font-size: 13px;
       font-weight: bold;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
+      color: #263548;
     }
 
     input,
     select {
       padding: 13px;
-      border: 1px solid #d1d5db;
-      border-radius: 7px;
+      border: 1px solid #cfd6dd;
+      border-radius: 8px;
       outline: none;
       font-size: 14px;
+      background: white;
     }
 
     input:focus,
     select:focus {
-      border-color: #111827;
+      border-color: #087f5b;
+      box-shadow: 0 0 0 2px rgba(8,127,91,0.1);
+    }
+
+    .hint {
+      margin-top: 5px;
+      font-size: 11px;
+      color: #6b7280;
     }
 
     button {
       border: none;
       padding: 13px 20px;
-      border-radius: 7px;
+      border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
+      font-size: 14px;
     }
 
     .primary-btn {
-      background: #111827;
+      background: #087f5b;
       color: white;
       margin-top: 20px;
     }
 
     .primary-btn:hover {
-      background: #374151;
+      background: #066a4c;
+    }
+
+    .message {
+      display: none;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      background: #ecfdf5;
+      color: #065f46;
+      font-weight: bold;
     }
 
     .shipment {
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
+      border: 1px solid #e1e6eb;
+      border-radius: 12px;
       padding: 20px;
       margin-bottom: 15px;
     }
@@ -125,13 +147,14 @@
     .tracking-number {
       font-size: 18px;
       font-weight: bold;
+      color: #071f3d;
     }
 
     .status {
       display: inline-block;
-      padding: 6px 10px;
+      padding: 7px 11px;
       border-radius: 20px;
-      background: #111827;
+      background: #087f5b;
       color: white;
       font-size: 12px;
       font-weight: bold;
@@ -140,7 +163,7 @@
     .shipment-details {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 10px;
       font-size: 14px;
       color: #4b5563;
     }
@@ -153,8 +176,8 @@
     }
 
     .update-btn {
-      background: #e5e7eb;
-      color: #111827;
+      background: #f5c400;
+      color: #071f3d;
     }
 
     .delete-btn {
@@ -162,19 +185,20 @@
       color: white;
     }
 
-    .message {
-      display: none;
-      padding: 12px;
-      border-radius: 7px;
-      margin-bottom: 20px;
-      background: #ecfdf5;
-      color: #065f46;
-    }
-
     .empty {
       text-align: center;
       color: #6b7280;
       padding: 25px;
+    }
+
+    .notice {
+      background: #fff8d8;
+      border-left: 4px solid #f5c400;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 13px;
+      color: #5b4a00;
+      border-radius: 5px;
     }
 
     @media (max-width: 700px) {
@@ -205,579 +229,551 @@
 
 <body>
 
-  <header>
-    <h1>JAMROCK DELIVERY SERVICE</h1>
-    <p>Shipment Administration Dashboard</p>
-  </header>
+<header>
+  <h1>JAMROCK DELIVERY SERVICE</h1>
+  <p>Shipment Administration Dashboard</p>
+</header>
 
+<main class="container">
 
-  <main class="container">
+  <div class="card">
 
-    <!-- CREATE SHIPMENT -->
+    <h2>Create New Shipment</h2>
 
-    <div class="card">
+    <div id="message" class="message"></div>
 
-      <h2>Create New Shipment</h2>
+    <form id="shipmentForm">
 
-      <div id="message" class="message"></div>
+      <div class="form-grid">
 
-      <form id="shipmentForm">
-
-        <div class="form-grid">
-
-          <div class="form-group">
-            <label>Tracking Number</label>
-
-            <input
-              type="text"
-              id="trackingNumber"
-              placeholder="Example: JAM100002"
-              required
-            >
-          </div>
-
-
-          <div class="form-group">
-            <label>Sender</label>
-
-            <input
-              type="text"
-              id="sender"
-              placeholder="Sender name"
-              value="JAMROCK DELIVERY SERVICE"
-            >
-          </div>
-
-
-          <div class="form-group">
-            <label>Receiver</label>
-
-            <input
-              type="text"
-              id="receiver"
-              placeholder="Receiver name"
-              required
-            >
-          </div>
-
-
-          <div class="form-group">
-            <label>Origin</label>
-
-            <input
-              type="text"
-              id="origin"
-              placeholder="Example: Lagos, Nigeria"
-              required
-            >
-          </div>
-
-
-          <div class="form-group">
-            <label>Destination</label>
-
-            <input
-              type="text"
-              id="destination"
-              placeholder="Example: London, UK"
-              required
-            >
-          </div>
-
-
-          <div class="form-group">
-            <label>Estimated Delivery</label>
-
-            <input
-              type="date"
-              id="estimatedDelivery"
-            >
-          </div>
-
+        <div class="form-group">
+          <label>Tracking Number</label>
+          <input
+            type="text"
+            id="trackingNumber"
+            placeholder="Example: JAM100002"
+            required
+          >
         </div>
 
+        <div class="form-group">
+          <label>Sender</label>
+          <input
+            type="text"
+            id="sender"
+            value="JAMROCK DELIVERY SERVICE"
+          >
+        </div>
 
-        <button
-          type="submit"
-          class="primary-btn"
-        >
-          Create Shipment
-        </button>
+        <div class="form-group">
+          <label>Receiver Full Name</label>
+          <input
+            type="text"
+            id="receiver"
+            placeholder="Customer full name"
+            required
+          >
+        </div>
 
-      </form>
+        <div class="form-group">
+          <label>Receiver Email</label>
+          <input
+            type="email"
+            id="receiverEmail"
+            placeholder="customer@example.com"
+          >
+        </div>
 
-    </div>
+        <div class="form-group">
+          <label>Origin</label>
+          <input
+            type="text"
+            id="origin"
+            placeholder="Example: Lagos, Nigeria"
+            required
+          >
+        </div>
 
+        <div class="form-group">
+          <label>Destination</label>
+          <input
+            type="text"
+            id="destination"
+            placeholder="Example: London, UK"
+            required
+          >
+        </div>
 
-    <!-- SHIPMENT LIST -->
+        <div class="form-group">
+          <label>Receiver City / Area</label>
+          <input
+            type="text"
+            id="receiverCity"
+            placeholder="Example: London"
+          >
+          <div class="hint">
+            Only the city/area should be displayed publicly.
+          </div>
+        </div>
 
-    <div class="card">
+        <div class="form-group">
+          <label>Estimated Delivery</label>
+          <input
+            type="date"
+            id="estimatedDelivery"
+          >
+        </div>
 
-      <h2>All Shipments</h2>
+        <div class="form-group full">
+          <label>Receiver Full Address</label>
+          <input
+            type="text"
+            id="receiverAddress"
+            placeholder="Full delivery address"
+          >
+          <div class="hint">
+            Keep this private. It is stored for administration.
+          </div>
+        </div>
 
-      <div id="shipmentList">
-
-        <div class="empty">
-          Loading shipments...
+        <div class="form-group full">
+          <label>Package Photo</label>
+          <input
+            type="url"
+            id="packagePhoto"
+            placeholder="Paste package photo URL"
+          >
+          <div class="hint">
+            Optional. Use an image URL that you control.
+          </div>
         </div>
 
       </div>
 
+      <div class="notice">
+        Customer tracking will show shipment information and an
+        estimated route. It will not claim to be live GPS tracking.
+      </div>
+
+      <button type="submit" class="primary-btn">
+        Create Shipment
+      </button>
+
+    </form>
+  </div>
+
+
+  <div class="card">
+
+    <h2>All Shipments</h2>
+
+    <div id="shipmentList">
+      <div class="empty">
+        Loading shipments...
+      </div>
     </div>
 
-  </main>
+  </div>
+
+</main>
 
 
-  <script>
+<script>
 
-    /* LOAD ALL SHIPMENTS */
+async function loadShipments() {
 
-    async function loadShipments() {
+  const shipmentList =
+    document.getElementById("shipmentList");
 
-      const shipmentList =
-        document.getElementById("shipmentList");
+  try {
 
-      try {
+    const response =
+      await fetch("/api/shipments");
 
-        const response =
-          await fetch("/api/shipments");
+    const data =
+      await response.json();
 
-        const data =
-          await response.json();
+    if (!data.success) {
+      throw new Error("Unable to load shipments.");
+    }
 
-        if (!data.success) {
-          throw new Error("Unable to load shipments.");
-        }
+    if (data.shipments.length === 0) {
 
-        if (data.shipments.length === 0) {
+      shipmentList.innerHTML =
+        '<div class="empty">No shipments found.</div>';
 
-          shipmentList.innerHTML =
-            '<div class="empty">No shipments found.</div>';
+      return;
+    }
 
-          return;
-        }
+    shipmentList.innerHTML = "";
+
+    data.shipments.forEach(shipment => {
+
+      const shipmentElement =
+        document.createElement("div");
+
+      shipmentElement.className = "shipment";
+
+      shipmentElement.innerHTML = `
+
+        <div class="shipment-header">
+
+          <div class="tracking-number">
+            ${escapeHtml(shipment.trackingNumber)}
+          </div>
+
+          <div class="status">
+            ${escapeHtml(shipment.status)}
+          </div>
+
+        </div>
+
+        <div class="shipment-details">
+
+          <div>
+            <strong>Sender:</strong>
+            ${escapeHtml(shipment.sender)}
+          </div>
+
+          <div>
+            <strong>Receiver:</strong>
+            ${escapeHtml(shipment.receiver)}
+          </div>
+
+          <div>
+            <strong>Email:</strong>
+            ${escapeHtml(shipment.receiverEmail || "Not provided")}
+          </div>
+
+          <div>
+            <strong>Origin:</strong>
+            ${escapeHtml(shipment.origin)}
+          </div>
+
+          <div>
+            <strong>Destination:</strong>
+            ${escapeHtml(shipment.destination)}
+          </div>
+
+          <div>
+            <strong>City / Area:</strong>
+            ${escapeHtml(shipment.receiverCity || "Not provided")}
+          </div>
+
+          <div>
+            <strong>Estimated Delivery:</strong>
+            ${escapeHtml(shipment.estimatedDelivery)}
+          </div>
+
+        </div>
+
+        <div class="shipment-actions">
+
+          <button
+            class="update-btn"
+            onclick="updateShipment('${escapeJs(shipment.trackingNumber)}')"
+          >
+            Update Shipment
+          </button>
+
+          <button
+            class="delete-btn"
+            onclick="deleteShipment('${escapeJs(shipment.trackingNumber)}')"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      `;
+
+      shipmentList.appendChild(shipmentElement);
+
+    });
+
+  } catch (error) {
+
+    shipmentList.innerHTML =
+      '<div class="empty">Unable to connect to the server.</div>';
+
+    console.error(error);
+  }
+}
 
 
-        shipmentList.innerHTML = "";
+document
+  .getElementById("shipmentForm")
+  .addEventListener("submit", async function(event) {
 
+    event.preventDefault();
 
-        data.shipments.forEach(shipment => {
+    const trackingNumber =
+      document.getElementById("trackingNumber").value.trim();
 
-          const shipmentElement =
-            document.createElement("div");
+    const sender =
+      document.getElementById("sender").value.trim();
 
-          shipmentElement.className =
-            "shipment";
+    const receiver =
+      document.getElementById("receiver").value.trim();
 
+    const receiverEmail =
+      document.getElementById("receiverEmail").value.trim();
 
-          shipmentElement.innerHTML = `
+    const origin =
+      document.getElementById("origin").value.trim();
 
-            <div class="shipment-header">
+    const destination =
+      document.getElementById("destination").value.trim();
 
-              <div class="tracking-number">
-                ${escapeHtml(shipment.trackingNumber)}
-              </div>
+    const receiverCity =
+      document.getElementById("receiverCity").value.trim();
 
-              <div class="status">
-                ${escapeHtml(shipment.status)}
-              </div>
+    const receiverAddress =
+      document.getElementById("receiverAddress").value.trim();
 
-            </div>
+    const packagePhoto =
+      document.getElementById("packagePhoto").value.trim();
 
+    const estimatedDelivery =
+      document.getElementById("estimatedDelivery").value;
 
-            <div class="shipment-details">
+    try {
 
-              <div>
-                <strong>Sender:</strong>
-                ${escapeHtml(shipment.sender)}
-              </div>
+      const response =
+        await fetch("/api/shipments", {
 
-              <div>
-                <strong>Receiver:</strong>
-                ${escapeHtml(shipment.receiver)}
-              </div>
+          method: "POST",
 
-              <div>
-                <strong>Origin:</strong>
-                ${escapeHtml(shipment.origin)}
-              </div>
+          headers: {
+            "Content-Type": "application/json"
+          },
 
-              <div>
-                <strong>Destination:</strong>
-                ${escapeHtml(shipment.destination)}
-              </div>
+          body: JSON.stringify({
 
-              <div>
-                <strong>Estimated Delivery:</strong>
-                ${escapeHtml(shipment.estimatedDelivery)}
-              </div>
+            trackingNumber,
+            sender,
+            receiver,
+            receiverEmail,
+            origin,
+            destination,
+            receiverCity,
+            receiverAddress,
+            packagePhoto,
+            estimatedDelivery
 
-            </div>
-
-
-            <div class="shipment-actions">
-
-              <button
-                class="update-btn"
-                onclick="updateShipment('${escapeJs(shipment.trackingNumber)}')"
-              >
-                Update Status
-              </button>
-
-
-              <button
-                class="delete-btn"
-                onclick="deleteShipment('${escapeJs(shipment.trackingNumber)}')"
-              >
-                Delete
-              </button>
-
-            </div>
-
-          `;
-
-
-          shipmentList.appendChild(
-            shipmentElement
-          );
+          })
 
         });
 
-      }
+      const data =
+        await response.json();
 
-      catch (error) {
+      if (!response.ok) {
 
-        shipmentList.innerHTML =
-          '<div class="empty">Unable to connect to the server.</div>';
-
-        console.error(error);
-
-      }
-
-    }
-
-
-    /* CREATE SHIPMENT */
-
-    document
-      .getElementById("shipmentForm")
-      .addEventListener("submit", async function(event) {
-
-        event.preventDefault();
-
-
-        const trackingNumber =
-          document
-            .getElementById("trackingNumber")
-            .value
-            .trim();
-
-        const sender =
-          document
-            .getElementById("sender")
-            .value
-            .trim();
-
-        const receiver =
-          document
-            .getElementById("receiver")
-            .value
-            .trim();
-
-        const origin =
-          document
-            .getElementById("origin")
-            .value
-            .trim();
-
-        const destination =
-          document
-            .getElementById("destination")
-            .value
-            .trim();
-
-        const estimatedDelivery =
-          document
-            .getElementById("estimatedDelivery")
-            .value;
-
-
-        try {
-
-          const response =
-            await fetch("/api/shipments", {
-
-              method: "POST",
-
-              headers: {
-                "Content-Type": "application/json"
-              },
-
-              body: JSON.stringify({
-
-                trackingNumber,
-                sender,
-                receiver,
-                origin,
-                destination,
-                estimatedDelivery
-
-              })
-
-            });
-
-
-          const data =
-            await response.json();
-
-
-          if (!response.ok) {
-
-            alert(
-              data.message ||
-              "Unable to create shipment."
-            );
-
-            return;
-          }
-
-
-          showMessage(
-            "Shipment created successfully."
-          );
-
-
-          document
-            .getElementById("shipmentForm")
-            .reset();
-
-
-          document
-            .getElementById("sender")
-            .value =
-            "JAMROCK DELIVERY SERVICE";
-
-
-          loadShipments();
-
-        }
-
-        catch (error) {
-
-          alert(
-            "Unable to connect to the server."
-          );
-
-          console.error(error);
-
-        }
-
-      });
-
-
-    /* UPDATE SHIPMENT */
-
-    async function updateShipment(trackingNumber) {
-
-      const status =
-        prompt(
-          "Enter the new shipment status:\n\n" +
-          "Shipment Created\n" +
-          "Picked Up\n" +
-          "In Transit\n" +
-          "Out for Delivery\n" +
-          "Delivered"
+        alert(
+          data.message ||
+          "Unable to create shipment."
         );
 
-
-      if (!status) {
         return;
       }
 
+      showMessage(
+        "Shipment created successfully."
+      );
 
-      const estimatedDelivery =
-        prompt(
-          "Enter estimated delivery date (YYYY-MM-DD):"
-        );
+      document
+        .getElementById("shipmentForm")
+        .reset();
 
+      document
+        .getElementById("sender")
+        .value =
+        "JAMROCK DELIVERY SERVICE";
 
-      try {
+      loadShipments();
 
-        const response =
-          await fetch(
-            "/api/shipments/" +
-            encodeURIComponent(trackingNumber),
-            {
+    } catch (error) {
 
-              method: "PATCH",
+      alert(
+        "Unable to connect to the server."
+      );
 
-              headers: {
-                "Content-Type": "application/json"
-              },
+      console.error(error);
+    }
 
-              body: JSON.stringify({
-
-                status,
-                estimatedDelivery
-
-              })
-
-            }
-          );
+  });
 
 
-        const data =
-          await response.json();
+async function updateShipment(trackingNumber) {
 
+  const status =
+    prompt(
+      "Enter the new shipment status:\n\n" +
+      "Shipment Created\n" +
+      "Picked Up\n" +
+      "In Transit\n" +
+      "Arriving at Destination\n" +
+      "Out for Delivery\n" +
+      "Delivered"
+    );
 
-        if (!response.ok) {
+  if (!status) {
+    return;
+  }
 
-          alert(
-            data.message ||
-            "Unable to update shipment."
-          );
+  const estimatedDelivery =
+    prompt(
+      "Enter estimated delivery date (YYYY-MM-DD):"
+    );
 
-          return;
+  if (!estimatedDelivery) {
+    return;
+  }
+
+  try {
+
+    const response =
+      await fetch(
+        "/api/shipments/" +
+        encodeURIComponent(trackingNumber),
+        {
+          method: "PATCH",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            status,
+            estimatedDelivery
+          })
         }
+      );
 
+    const data =
+      await response.json();
 
-        alert(
-          "Shipment updated successfully."
-        );
+    if (!response.ok) {
 
+      alert(
+        data.message ||
+        "Unable to update shipment."
+      );
 
-        loadShipments();
-
-      }
-
-      catch (error) {
-
-        alert(
-          "Unable to connect to the server."
-        );
-
-        console.error(error);
-
-      }
-
+      return;
     }
 
-
-    /* DELETE SHIPMENT */
-
-    async function deleteShipment(trackingNumber) {
-
-      const confirmed =
-        confirm(
-          "Are you sure you want to delete shipment " +
-          trackingNumber +
-          "?"
-        );
-
-
-      if (!confirmed) {
-        return;
-      }
-
-
-      try {
-
-        const response =
-          await fetch(
-            "/api/shipments/" +
-            encodeURIComponent(trackingNumber),
-            {
-              method: "DELETE"
-            }
-          );
-
-
-        const data =
-          await response.json();
-
-
-        if (!response.ok) {
-
-          alert(
-            data.message ||
-            "Unable to delete shipment."
-          );
-
-          return;
-        }
-
-
-        alert(
-          "Shipment deleted successfully."
-        );
-
-
-        loadShipments();
-
-      }
-
-      catch (error) {
-
-        alert(
-          "Unable to connect to the server."
-        );
-
-        console.error(error);
-
-      }
-
-    }
-
-
-    /* SUCCESS MESSAGE */
-
-    function showMessage(text) {
-
-      const message =
-        document.getElementById("message");
-
-      message.textContent = text;
-
-      message.style.display = "block";
-
-
-      setTimeout(() => {
-
-        message.style.display = "none";
-
-      }, 4000);
-
-    }
-
-
-    /* SECURITY HELPERS */
-
-    function escapeHtml(value) {
-
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
-
-
-    function escapeJs(value) {
-
-      return String(value)
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'");
-
-    }
-
-
-    /* START */
+    alert(
+      "Shipment updated successfully."
+    );
 
     loadShipments();
 
-  </script>
+  } catch (error) {
+
+    alert(
+      "Unable to connect to the server."
+    );
+
+    console.error(error);
+  }
+}
+
+
+async function deleteShipment(trackingNumber) {
+
+  const confirmed =
+    confirm(
+      "Are you sure you want to delete shipment " +
+      trackingNumber +
+      "?"
+    );
+
+  if (!confirmed) {
+    return;
+  }
+
+  try {
+
+    const response =
+      await fetch(
+        "/api/shipments/" +
+        encodeURIComponent(trackingNumber),
+        {
+          method: "DELETE"
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if (!response.ok) {
+
+      alert(
+        data.message ||
+        "Unable to delete shipment."
+      );
+
+      return;
+    }
+
+    alert(
+      "Shipment deleted successfully."
+    );
+
+    loadShipments();
+
+  } catch (error) {
+
+    alert(
+      "Unable to connect to the server."
+    );
+
+    console.error(error);
+  }
+}
+
+
+function showMessage(text) {
+
+  const message =
+    document.getElementById("message");
+
+  message.textContent = text;
+
+  message.style.display = "block";
+
+  setTimeout(() => {
+
+    message.style.display = "none";
+
+  }, 4000);
+}
+
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+function escapeJs(value) {
+
+  return String(value)
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'");
+}
+
+
+loadShipments();
+
+</script>
 
 </body>
 </html>
