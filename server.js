@@ -52,7 +52,11 @@ app.post("/api/shipments", (req, res) => {
       receiver,
       origin,
       destination,
-      estimatedDelivery
+      estimatedDelivery,
+      receiverEmail,
+      packagePhoto,
+      receiverAddress,
+      receiverCity
     } = req.body;
 
     if (!trackingNumber || !receiver || !destination) {
@@ -76,7 +80,11 @@ app.post("/api/shipments", (req, res) => {
       receiver,
       origin,
       destination,
-      estimatedDelivery
+      estimatedDelivery,
+      receiverEmail,
+      packagePhoto,
+      receiverAddress,
+      receiverCity
     });
 
     res.status(201).json({
@@ -86,6 +94,8 @@ app.post("/api/shipments", (req, res) => {
     });
 
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       success: false,
       message: "Unable to create shipment."
@@ -99,7 +109,11 @@ app.patch("/api/shipments/:trackingNumber", (req, res) => {
     req.params.trackingNumber,
     {
       status: req.body.status,
-      estimatedDelivery: req.body.estimatedDelivery
+      estimatedDelivery: req.body.estimatedDelivery,
+      receiverEmail: req.body.receiverEmail,
+      packagePhoto: req.body.packagePhoto,
+      receiverAddress: req.body.receiverAddress,
+      receiverCity: req.body.receiverCity
     }
   );
 
