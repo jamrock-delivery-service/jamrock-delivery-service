@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JAMROCK DELIVERY SERVICE</title>
+<title>ROYAL WORLDWIDE DELIVERY SERVICE</title>
 
 <style>
 *{
@@ -542,7 +542,7 @@ footer span{
 <header>
 
   <div class="logo">
-    JAMROCK <span>DELIVERY SERVICE</span>
+    ROYAL <span>WORLDWIDE DELIVERY SERVICE</span>
   </div>
 
   <nav>
@@ -567,7 +567,7 @@ footer span{
     </div>
 
     <h1>
-      JAMROCK <span>DELIVERY SERVICE</span>
+      ROYAL <span>WORLDWIDE DELIVERY SERVICE</span>
     </h1>
 
     <p>
@@ -744,7 +744,7 @@ footer span{
       <h2>We Deliver More Than Packages</h2>
 
       <p>
-        JAMROCK DELIVERY SERVICE provides dependable
+        ROYAL WORLDWIDE DELIVERY SERVICE provides dependable
         shipping and logistics solutions.
       </p>
 
@@ -800,12 +800,12 @@ footer span{
 
       <div class="about-box">
 
-        <small>ABOUT JAMROCK</small>
+        <small>ABOUT ROYAL WORLDWIDE DELIVERY</small>
 
         <h2>Moving What Matters</h2>
 
         <p>
-          JAMROCK DELIVERY SERVICE is focused on providing
+          ROYAL WORLDWIDE DELIVERY SERVICE is focused on providing
           dependable delivery and shipping solutions for
           customers and businesses.
         </p>
@@ -815,7 +815,7 @@ footer span{
 
       <div>
 
-        <h2>Why Choose JAMROCK?</h2>
+        <h2>Why Choose ROYAL WORLDWIDE DELIVERY?</h2>
 
         <div class="why-list">
 
@@ -908,7 +908,7 @@ footer span{
 <footer>
 
   <p>
-    © 2026 <span>JAMROCK DELIVERY SERVICE</span>.
+    © 2026 <span>ROYAL WORLDWIDE DELIVERY SERVICE</span>.
     All rights reserved.
   </p>
 
@@ -977,6 +977,12 @@ async function trackShipment(){
       "resultReceiver"
     ).textContent =
       shipment.receiver || "";
+
+
+    document.getElementById(
+      "resultEmail"
+    ).textContent =
+      shipment.receiverEmail || "Not provided";
 
 
     document.getElementById(
